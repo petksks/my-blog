@@ -31,8 +31,12 @@ This task is intended to enhance your understanding of full-stack web developmen
 3. Install the required packages using `npm install` or `yarn install`.
 4. Create a `.env.local` file and populate it with the necessary Supabase credentials (Supabase URL and Supabase anon key). Refer to the example file (.env.local.example) in the root folder for guidance.
 5. Run the development server with `npm run dev` or `yarn dev`.
-6. To remove the existing GitHub connection and push to your own repository, execute the following commands in your terminal:
-   Replace `<your-new-repository-url>` with the URL of your new repository on GitHub. This will reinitialize the git connection to your new repository.
+6. Remove the github connection and add a connection to you own repo:
+
+   - git remote rm origin
+   - git remote add origin [YOUR_NEW_REPOSITORY_URL]
+
+   This will reinitialize the git connection to your new repository.
 
 ## Requirements
 
