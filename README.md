@@ -133,4 +133,4 @@ Feel free to choose one or more from the list above, or come up with your own id
 
 ---
 
-Dive into coding, and let's create an impressive blog/portfolio page together! Good luck!
+Dive into coding, and let's create an impressive blog/portfolio page together! Good luck! <3
