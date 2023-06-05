@@ -91,24 +91,28 @@ Below is the basic structure of the data tables that is the minimum requirement.
 ### Users:
 
 id: uuid
+````
 email: text
+````
 
 ### Posts:
-
+````
 id: uuid
 title: text
 user_id: uuid // foreign key to users table
 slug: text // needs to be unique
 created_at: timestamptz
 body: text
+````
 
 ### Comments:
-
+````
 id: uuid
 author: text
 created_at: timestamptz
 post_id: uuid // foreign key to posts table
 comment: text
+````
 
 ## Deadline
 
