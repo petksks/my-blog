@@ -28,10 +28,7 @@ export default function BlogPost() {
 
   const post = data?.data;
 
-  const { trigger: deleteTrigger } = useSWRMutation(
-    postCacheKey, 
-    deletePost
-  );
+  const { trigger: deleteTrigger } = useSWRMutation(postCacheKey, deletePost);
   const handleDeletePost = async () => {
     const { error } = await deleteTrigger(post.id);
     if (!error) {
@@ -66,7 +63,7 @@ export default function BlogPost() {
        
         {/* {user && user.id === post.author && ( */}
         <div className={styles.buttonContainer}>
-          <Button onClick={handleDeletePost}>Delete</Button>
+          <Button onClick={handleDeletePost} if>Delete</Button>
           <Button onClick={handleEditPost}>Edit</Button>
         </div>
         {/* )} */}

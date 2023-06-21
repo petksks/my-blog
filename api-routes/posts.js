@@ -1,5 +1,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import { uploadImage } from "../utils/uploadImage";
+import { useRouter } from "next/router";
 
 export const postCacheKey = "/blog/post";
 
@@ -26,15 +27,15 @@ export async function getPostBySlug({ slug }) {
   return { data, error };
 }
 
-export async function deletePost(_, { arg: id }) {
-  const { data, error } = await supabase
-    .from('posts')
+export const deletePost = async (_, { arg: postId }) => {
+  const { data, error, status } = await supabase
+    .from("posts")
     .delete()
-    .select()
-    .eq('id', id);
+    .eq("id", postId);
 
-  return { data, error };
-}
+  return { error, status, data };
+};
+
 
 export const addPost = async (_, { arg: newPost }) => {
   let image = "";
