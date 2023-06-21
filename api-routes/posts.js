@@ -1,4 +1,5 @@
 import { supabase } from "@/lib/supabaseClient";
+import { uploadImage } from "../utils/uploadImage";
 
 export const postCacheKey = "/blog/post";
 
