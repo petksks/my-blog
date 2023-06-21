@@ -48,6 +48,8 @@ export default function BlogPost() {
     return <div>Error: {error.message}</div>;
   }
 
+  
+
   return (
     <>
       <section className={styles.container}>
