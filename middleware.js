@@ -14,7 +14,7 @@ export async function middleware(req) {
   // Check auth condition
   if (session) {
     // Authentication successful, forward request to protected route.
-    return res
+    return res;
   }
 
   // Auth condition not met, redirect to home page.
