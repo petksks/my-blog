@@ -8,15 +8,12 @@ import BlogImageBanner from "@components/blog-image-banner";
 import { getPostBySlug, postCacheKey, deletePost, getPost } from "../../../api-routes/posts";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { useUser } from '@supabase/auth-helpers-react'
-
-
-
+import { useUser } from '@supabase/auth-helpers-react';
 
 export default function BlogPost() {
   const router = useRouter();
   const { slug } = router.query;
-  // const user = useUser();
+  const user = useUser();
 
   const { data: postsData = [] } = useSWR(postCacheKey, getPost);
   const posts = postsData.data || [];
@@ -27,8 +24,9 @@ export default function BlogPost() {
   );
 
   const post = data?.data;
-
+  
   const { trigger: deleteTrigger } = useSWRMutation(postCacheKey, deletePost);
+
   const handleDeletePost = async () => {
     const { error } = await deleteTrigger(post.id);
     if (!error) {
@@ -40,15 +38,12 @@ export default function BlogPost() {
     router.push(`/blog/${slug}/edit`);
   };
 
-    
   if (!post && !error) {
     return <div>Loading...</div>;
   }
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-
-  
 
   return (
     <>
@@ -61,14 +56,12 @@ export default function BlogPost() {
         </div>
         <div dangerouslySetInnerHTML={{ __html: post.body }} />
         <span className={styles.author}>Author: {post.author}</span>
-
-       
-        {/* {user && user.id === post.author && ( */}
-        <div className={styles.buttonContainer}>
-          <Button onClick={handleDeletePost} if>Delete</Button>
-          <Button onClick={handleEditPost}>Edit</Button>
-        </div>
-        {/* )} */}
+        {user && user.id === post.author && (
+          <div className={styles.buttonContainer}>
+            <Button onClick={handleDeletePost}>Delete</Button>
+            <Button onClick={handleEditPost}>Edit</Button>
+          </div>
+        )}
       </section>
 
       <Comments postId={post.id} post={post}/>

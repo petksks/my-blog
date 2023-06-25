@@ -27,13 +27,14 @@ export async function getPostBySlug({ slug }) {
   return { data, error };
 }
 
-export const deletePost = async (_, { arg: postId }) => {
-  const { data, error, status } = await supabase
+export async function deletePost(_, { arg: id }) {
+  const { data, error } = await supabase
     .from("posts")
     .delete()
-    .eq("id", postId);
+    .select()
+    .eq("id", id);
 
-  return { error, status, data };
+  return { data, error };
 };
 
 
