@@ -15,24 +15,43 @@ const { trigger: addTrigger } = useSWRMutation(
   addPost
 );
 
+
 const handleOnSubmit = async ({ editorContent, titleInput, image }) => {
-  const slug = createSlug(titleInput);
 
-  const newPost = {
-    title: titleInput,
-    slug,
-    body: editorContent,
-    image,
+    const slug = createSlug(titleInput);
+
+
+
+
+    const newPost = {
+
+      title: titleInput,
+
+      slug,
+
+      body: editorContent,
+
+      image,
+
+      author: user.id
+
+    };
+
+
+
+
+    const { error } = await addTrigger(newPost);
+
+
+
+
+    if (!error) {
+
+      router.push(`/blog/${slug}`);
+
+    }
+
   };
-
-  const { error } = await addTrigger(newPost);
-
-  console.log(image);
-
-  if (!error) {
-    router.push(`/blog/${slug}`);
-  }
-};
 
 
 

@@ -15,6 +15,8 @@ export default function BlogPost() {
   const { slug } = router.query;
   const user = useUser();
 
+  console.log(user);
+
   const { data: postsData = [] } = useSWR(postCacheKey, getPost);
   const posts = postsData.data || [];
 
@@ -45,6 +47,10 @@ export default function BlogPost() {
     return <div>Error: {error.message}</div>;
   }
 
+
+  console.log("user.id:", user?.id);
+  console.log("post.author:", post?.author);
+
   return (
     <>
       <section className={styles.container}>
@@ -55,13 +61,18 @@ export default function BlogPost() {
           <div className={styles.border} />
         </div>
         <div dangerouslySetInnerHTML={{ __html: post.body }} />
-        <span className={styles.author}>Author: {post.author}</span>
-        {user && user.id === post.author && (
-          <div className={styles.buttonContainer}>
-            <Button onClick={handleDeletePost}>Delete</Button>
-            <Button onClick={handleEditPost}>Edit</Button>
-          </div>
-        )}
+
+
+        <span className={styles.author}>Author:</span>
+
+        
+        {user &&
+            user.id === post.author && ( 
+              <div className={styles.buttonContainer}>
+                <Button onClick={handleDeletePost}>Delete</Button>
+                <Button onClick={handleEditPost}>Edit</Button>
+              </div>
+            )}
       </section>
 
       <Comments postId={post.id} post={post}/>
