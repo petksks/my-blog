@@ -5,10 +5,13 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { createSlug } from "@/utils/createSlug";
 import Button from "@components/button";
+import { createPagesServerClient } from "@supabase/auth-helpers-nextjs";
+import { useUser } from "@supabase/auth-helpers-react";
 
 export default function EditBlogPost() {
   const router = useRouter();
   const { slug } = router.query;
+  const user = useUser
 
   const { 
     data: { data: post = {} } = {},
@@ -29,6 +32,7 @@ export default function EditBlogPost() {
         slug: newSlug,
         body: editorContent,
         image: image,
+        author: user.id,
         id: post && post.id,
       };
     
@@ -68,32 +72,32 @@ export default function EditBlogPost() {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
-  const supabase = createPagesServerClient(ctx);
-  const { slug } = ctx.params;
+// export const getServerSideProps = async (ctx) => {
+//   const supabase = createPagesServerClient(ctx);
+//   const { slug } = ctx.params;
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
 
-  const { data } = await supabase
-    .from("posts")
-    .select()
-    .single()
-    .eq("slug", slug);
+//   const { data } = await supabase
+//     .from("posts")
+//     .select()
+//     .single()
+//     .eq("slug", slug);
 
-  const isAuthor = data.user_id === session.user.id;
+//   const isAuthor = data.user_id === session.user.id;
 
-  if (!isAuthor) {
-    return {
-      redirect: {
-        destination: `/blog/${slug}`,
-        permanent: true,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-};
+//   if (!isAuthor) {
+//     return {
+//       redirect: {
+//         destination: `/blog/${slug}`,
+//         permanent: true,
+//       },
+//     };
+//   }
+//   return {
+//     props: {},
+//   };
+// };
 
